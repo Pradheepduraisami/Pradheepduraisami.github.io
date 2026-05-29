@@ -1,13 +1,772 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>part1</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pradheep D — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0b0c10;
+    --surface: #13151c;
+    --card: #1a1d28;
+    --border: rgba(255,255,255,0.07);
+    --accent: #c8a96e;
+    --accent2: #7c9fc9;
+    --text: #e8e4da;
+    --muted: #888380;
+    --tag-bg: rgba(200,169,110,0.1);
+    --tag-border: rgba(200,169,110,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 4rem;
+    background: rgba(11,12,16,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  nav ul { display: flex; gap: 2.5rem; list-style: none; }
+
+  nav a {
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--accent); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--text);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 62px; left: 0; right: 0;
+    background: rgba(11,12,16,0.97);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid var(--border);
+    z-index: 99;
+    flex-direction: column;
+    padding: 1.5rem 2rem 2rem;
+    gap: 0;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 1rem 0;
+    border-bottom: 0.5px solid var(--border);
+    transition: color 0.2s;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+  }
+
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a:hover { color: var(--accent); }
+
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(124,159,201,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 span { display: block; color: var(--accent); }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 440px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: #0b0c10;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-outline {
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    border: 0.5px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+
+  .btn-outline:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+  .hero-photo {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+  }
+
+  .photo-frame {
+    width: 360px; height: 450px;
+    position: relative;
+  }
+
+  .photo-frame::before {
+    content: '';
+    position: absolute;
+    top: 20px; left: 20px; right: -20px; bottom: -20px;
+    border: 1px solid rgba(200,169,110,0.3);
+    pointer-events: none;
+  }
+
+  .photo-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    filter: grayscale(15%) contrast(1.05);
+  }
+
+  .photo-badge {
+    position: absolute;
+    bottom: -1.5rem; left: -1.5rem;
+    background: var(--accent);
+    color: #0b0c10;
+    padding: 0.75rem 1.25rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  section { padding: 6rem 4rem; position: relative; }
+
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+    max-width: 80px;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  .skills-section { background: var(--surface); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .skill-card {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    padding: 1.75rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .skill-card:hover { border-color: rgba(200,169,110,0.3); transform: translateY(-2px); }
+
+  .skill-card-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .tag {
+    background: var(--tag-bg);
+    border: 0.5px solid var(--tag-border);
+    color: var(--accent);
+    font-size: 0.78rem;
+    padding: 0.25rem 0.75rem;
+    font-weight: 500;
+  }
+
+  .tag.blue {
+    background: rgba(124,159,201,0.1);
+    border-color: rgba(124,159,201,0.25);
+    color: var(--accent2);
+  }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    padding: 3rem 0;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .exp-item:last-child { border-bottom: 0.5px solid var(--border); }
+
+  .exp-date { font-size: 0.8rem; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+  .exp-company { font-size: 0.85rem; color: var(--muted); }
+
+  .exp-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .exp-bullets { list-style: none; margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .exp-bullets li {
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding-left: 1.25rem;
+    position: relative;
+    font-weight: 300;
+  }
+
+  .exp-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.8rem; }
+
+  .projects-section { background: var(--surface); }
+
+  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+  .project-card {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .project-card:hover { border-color: rgba(200,169,110,0.3); transform: translateY(-3px); }
+
+  .project-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: rgba(200,169,110,0.15);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  .project-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; font-weight: 300; flex: 1; }
+
+  .edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+  .edu-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .edu-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .edu-gpa {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: var(--accent);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .edu-gpa span { font-size: 1rem; font-weight: 400; font-family: 'DM Sans', sans-serif; color: var(--muted); }
+
+  .edu-degree { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+  .edu-school { font-size: 0.82rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
+  .edu-year { font-size: 0.72rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 1rem; }
+
+  .achieve-section { background: var(--surface); }
+
+  .achieve-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+  .achieve-item {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    padding: 1.75rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+
+  .achieve-item:hover { border-color: rgba(200,169,110,0.3); }
+
+  .achieve-icon {
+    width: 36px; height: 36px;
+    background: rgba(200,169,110,0.1);
+    border: 0.5px solid rgba(200,169,110,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1rem;
+  }
+
+  .achieve-text { font-size: 0.9rem; color: var(--text); line-height: 1.6; font-weight: 400; }
+  .achieve-text strong { color: var(--accent); font-weight: 500; }
+
+  .contact-section { text-align: center; padding: 8rem 4rem; position: relative; overflow: hidden; }
+
+  .contact-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(200,169,110,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-section h2 { margin-bottom: 1rem; }
+
+  .contact-desc {
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 480px;
+    margin: 0 auto 3rem;
+  }
+
+  .contact-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 300;
+  }
+
+  .contact-link:hover { color: var(--accent); }
+
+  .contact-link .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-content > * { animation: fadeInUp 0.7s ease both; }
+  .hero-eyebrow { animation-delay: 0.1s; }
+  h1 { animation-delay: 0.2s; }
+  .hero-desc { animation-delay: 0.35s; }
+  .hero-cta { animation-delay: 0.5s; }
+  .hero-photo { animation: fadeInUp 0.8s ease 0.3s both; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hamburger { display: flex; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; text-align: center; }
+    .hero-eyebrow { justify-content: center; }
+    .hero-desc { max-width: 100%; }
+    .hero-cta { justify-content: center; }
+    .hero-photo { order: -1; }
+    .photo-frame { width: 260px; height: 320px; }
+    section { padding: 4rem 1.5rem; }
+    .skills-grid, .projects-grid, .edu-grid, .achieve-list { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 1rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">PD</a>
+  <ul>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#skills" onclick="closeMenu()">Skills</a>
+  <a href="#experience" onclick="closeMenu()">Experience</a>
+  <a href="#projects" onclick="closeMenu()">Projects</a>
+  <a href="#education" onclick="closeMenu()">Education</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<script>
+  const btn = document.getElementById('hamburger');
+  const menu = document.getElementById('mobile-menu');
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+  });
+  function closeMenu() {
+    btn.classList.remove('open');
+    menu.classList.remove('open');
+  }
+</script>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Computer Science Engineer</div>
+    <h1>Pradheep<span>Duraisami</span></h1>
+    <p class="hero-desc">
+      A software engineer with hands-on experience in ETL workflows, data integration,
+      and backend development. Passionate about problem solving, data structures,
+      and building impactful systems.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Get In Touch</a>
+      <a href="#projects" class="btn-outline">View Work</a>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <div class="photo-frame">
+      <!-- Replace the src below with your hosted image URL -->
+      <img src="IMG_2206.JPG" alt="Pradheep Duraisami" />
+      <div class="photo-badge">Salem, India</div>
+    </div>
+  </div>
+</section>
+
+<section class="skills-section" id="skills">
+  <div class="section-label">Expertise</div>
+  <h2>Skills & Technologies</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-card-label">Languages</div>
+      <div class="skill-tags">
+        <span class="tag">C</span>
+        <span class="tag">C++</span>
+        <span class="tag">Java</span>
+        <span class="tag">Python</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">SQL</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">Technologies</div>
+      <div class="skill-tags">
+        <span class="tag blue">Informatica Power Center</span>
+        <span class="tag blue">MS SQL Server</span>
+        <span class="tag blue">ETL Workflows</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">Core Concepts</div>
+      <div class="skill-tags">
+        <span class="tag">Data Structures</span>
+        <span class="tag">Problem Solving</span>
+        <span class="tag">Data Integration</span>
+        <span class="tag">Machine Learning</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-label">Career</div>
+  <h2>Work Experience</h2>
+  <div class="exp-item">
+    <div class="exp-meta">
+      <div class="exp-date">2021 – 2022</div>
+      <div class="exp-company">Systech Solutions · Chennai</div>
+    </div>
+    <div class="exp-body">
+      <div class="exp-title">Associate Software Engineer</div>
+      <ul class="exp-bullets">
+        <li>Designed and maintained ETL workflows using Informatica Power Center for seamless data integration across enterprise systems.</li>
+        <li>Developed and optimised SQL queries for efficient data processing and retrieval on Microsoft SQL Server.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="projects-section" id="projects">
+  <div class="section-label">Work</div>
+  <h2>Featured Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-num">01</div>
+      <div class="project-name">Anomaly Intrusion Detection</div>
+      <div class="project-desc">
+        Developed an anomaly-based intrusion detection system using concept drift techniques — CDIL and DTIL — to identify evolving network threats with adaptive accuracy.
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <div class="project-name">Hand Gesture Interaction</div>
+      <div class="project-desc">
+        Built a machine learning project that tracks real-time hand movements via webcam and maps them to cursor control, enabling gesture-driven human-computer interaction.
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <div class="project-name">Sudoku Solver</div>
+      <div class="project-desc">
+        Designed a C++ application capable of solving any valid Sudoku puzzle using constraint propagation and backtracking algorithms, with a clean interactive interface.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-label">Academic Background</div>
+  <h2>Education</h2>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-gpa">6.8 <span>/ 10</span></div>
+      <div class="edu-degree">B.E — Computer Science & Engineering</div>
+      <div class="edu-school">College of Engineering Guindy,<br>Anna University, Chennai</div>
+      <div class="edu-year">2016 – 2020</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-gpa">94 <span>/ 100</span></div>
+      <div class="edu-degree">Higher Secondary (12th)</div>
+      <div class="edu-school">VVBHS, Namakkal</div>
+      <div class="edu-year">Completed</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-gpa">97.8 <span>/ 100</span></div>
+      <div class="edu-degree">10th Board</div>
+      <div class="edu-school">SM School, Salem</div>
+      <div class="edu-year">Completed</div>
+    </div>
+  </div>
+</section>
+
+<section class="achieve-section" id="achievements">
+  <div class="section-label">Recognition</div>
+  <h2>Key Achievements</h2>
+  <div class="achieve-list">
+    <div class="achieve-item">
+      <div class="achieve-icon">🏛</div>
+      <div class="achieve-text">
+        <strong>Organiser</strong> — Kurukshetra 2018, Technical Event at CEG, Anna University
+      </div>
+    </div>
+    <div class="achieve-item">
+      <div class="achieve-icon">🎖</div>
+      <div class="achieve-text">
+        <strong>General Secretary</strong> — NSS 2019, College of Engineering Guindy, Chennai
+      </div>
+    </div>
+    <div class="achieve-item">
+      <div class="achieve-icon">🏆</div>
+      <div class="achieve-text">
+        <strong>Organiser</strong> — ABACUS 2020, Symposium of DCSE, CEG, Anna University
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="section-label" style="justify-content:center; margin-bottom:1rem;">Contact</div>
+  <h2>Let's Connect</h2>
+  <p class="contact-desc">Open to exciting opportunities in software engineering and data technologies. Feel free to reach out!</p>
+  <div class="contact-links">
+    <a href="mailto:duripradheep@gmail.com" class="contact-link">
+      <span class="dot"></span>
+      duripradheep@gmail.com
+    </a>
+    <a href="tel:+917539971799" class="contact-link">
+      <span class="dot"></span>
+      +91 75399 71799
+    </a>
+    <span class="contact-link">
+      <span class="dot"></span>
+      Salem, Tamil Nadu, India
+    </span>
+  </div>
+</section>
+
+<footer>
+  <span>Pradheep Duraisami — Computer Science Engineer</span>
+  <span>© 2026</span>
+</footer>
+
+</body>
 </html>
