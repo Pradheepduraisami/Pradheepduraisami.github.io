@@ -1,0 +1,836 @@
+/*
+ * FLANTZ — Event Management Website
+ * flantz.css
+ *
+ * Table of Contents
+ * -----------------
+ * 1. Reset & Base
+ * 2. Variables
+ * 3. Navigation
+ * 4. Hero
+ * 5. Ticker
+ * 6. Shared Section Styles
+ * 7. About
+ * 8. Services
+ * 9. Events
+ * 10. Why Flantz
+ * 11. Contact
+ * 12. Footer
+ * 13. Animations
+ * 14. Responsive
+ */
+
+
+/* ======================
+   1. Reset & Base
+   ====================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+
+/* ======================
+   2. Variables
+   ====================== */
+
+:root {
+  --black:      #0a0a0a;
+  --white:      #f5f2ec;
+  --accent:     #ff3c1f;
+  --accent2:    #ffb800;
+  --gray:       #1a1a1a;
+  --mid:        #2e2e2e;
+  --text-muted: #888;
+}
+
+
+/* ======================
+   3. Navigation
+   ====================== */
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 4rem;
+  background: rgba(10, 10, 10, 0.92);
+  border-bottom: 1px solid #1f1f1f;
+  backdrop-filter: blur(8px);
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2.5rem;
+}
+
+nav ul a {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+nav ul a:hover {
+  color: var(--white);
+}
+
+.nav-cta {
+  background: var(--accent);
+  color: var(--white) !important;
+  padding: 0.5rem 1.25rem;
+  border-radius: 2px;
+}
+
+.nav-cta:hover {
+  background: #e03018;
+}
+
+/* Back to portfolio link */
+.nav-back {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted) !important;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-back:hover {
+  color: var(--white) !important;
+}
+
+
+/* ======================
+   4. Hero
+   ====================== */
+
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 4rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--black);
+  z-index: 0;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image:
+    linear-gradient(rgba(255, 60, 31, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 60, 31, 0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-circle,
+.hero-circle2 {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-circle {
+  top: -200px;
+  right: -200px;
+  width: 700px;
+  height: 700px;
+  border: 1px solid rgba(255, 60, 31, 0.12);
+}
+
+.hero-circle2 {
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  border: 1px solid rgba(255, 184, 0, 0.1);
+}
+
+.hero-tag {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.hero-tag::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.hero-headline {
+  position: relative;
+  z-index: 2;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 13vw, 10rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: var(--white);
+    margin-top: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-headline span {
+  color: var(--accent);
+}
+
+.hero-sub {
+  position: relative;
+  z-index: 2;
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 420px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
+.hero-actions {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  background: var(--accent);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-primary:hover {
+  background: #e03018;
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.btn-ghost:hover {
+  color: var(--white);
+}
+
+/* Stats */
+.hero-stats {
+  position: absolute;
+  right: 4rem;
+  bottom: 5rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-end;
+}
+
+.stat-item {
+  text-align: right;
+}
+
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--white);
+}
+
+.stat-num span {
+  color: var(--accent);
+}
+
+.stat-label {
+  margin-top: 2px;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+
+/* ======================
+   5. Ticker
+   ====================== */
+
+.ticker {
+  overflow: hidden;
+  padding: 0.65rem 0;
+  background: var(--accent);
+  white-space: nowrap;
+}
+
+.ticker-track {
+  display: inline-flex;
+  gap: 3rem;
+  animation: ticker 18s linear infinite;
+}
+
+.ticker-track span {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  color: var(--white);
+}
+
+.ticker-dot {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+
+/* ======================
+   6. Shared Section Styles
+   ====================== */
+
+section {
+  padding: 7rem 4rem;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+
+
+/* ======================
+   7. About
+   ====================== */
+
+#about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.about-visual {
+  position: relative;
+  height: 420px;
+}
+
+.about-box {
+  position: absolute;
+  border-radius: 2px;
+}
+
+.about-box-1 {
+  top: 0;
+  left: 0;
+  width: 66%;
+  height: 66%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  background: var(--gray);
+  border: 1px solid var(--mid);
+  overflow: hidden;
+}
+
+/* Ghost watermark text */
+.about-box-1::after {
+  content: 'FLANTZ';
+  position: absolute;
+  top: -0.5rem;
+  left: -0.5rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem;
+  letter-spacing: 0.05em;
+  color: rgba(255, 60, 31, 0.06);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.about-box-2 {
+  bottom: 0;
+  right: 0;
+  width: 58%;
+  height: 58%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.5rem;
+  background: var(--accent);
+}
+
+.about-box-2 strong {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.about-box-2 p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.about-text p {
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+
+.about-text p strong {
+  font-weight: 400;
+  color: var(--white);
+}
+
+
+/* ======================
+   8. Services
+   ====================== */
+
+#services {
+  background: var(--gray);
+}
+
+.services-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 4rem;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+  background: var(--mid);
+}
+
+.service-card {
+  padding: 2.5rem 2rem;
+  background: var(--gray);
+  transition: background 0.2s;
+  cursor: default;
+}
+
+.service-card:hover {
+  background: #222;
+}
+
+.service-num {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.service-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.75rem;
+}
+
+.service-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+
+/* ======================
+   9. Events
+   ====================== */
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.event-card {
+  padding: 2rem 1.5rem;
+  background: var(--gray);
+  border: 1px solid var(--mid);
+  border-radius: 2px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.event-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+}
+
+.event-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  margin-bottom: 1rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  background: rgba(255, 184, 0, 0.1);
+  border-radius: 1px;
+}
+
+.event-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.event-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+
+/* ======================
+   10. Why Flantz
+   ====================== */
+
+#why {
+  background: var(--gray);
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.why-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.why-item {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--mid);
+}
+
+.why-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.why-num {
+  min-width: 2rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+.why-content h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.why-content p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.why-quote {
+  padding: 3rem;
+  background: var(--black);
+  border-left: 3px solid var(--accent);
+  border-radius: 2px;
+}
+
+.why-quote blockquote {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  margin-bottom: 1.5rem;
+}
+
+.why-quote cite {
+  font-size: 0.8rem;
+  font-style: normal;
+  color: var(--text-muted);
+}
+
+.why-quote-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--mid);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.why-quote-footer strong {
+  font-weight: 400;
+  color: var(--white);
+}
+
+
+/* ======================
+   11. Contact
+   ====================== */
+
+#contact {
+  padding: 7rem 4rem;
+  background: var(--black);
+  text-align: center;
+}
+
+.contact-big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 9vw, 7rem);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+
+.contact-big span {
+  color: var(--accent);
+}
+
+.contact-sub {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+}
+
+.contact-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.contact-card {
+  min-width: 200px;
+  padding: 1.5rem 2rem;
+  background: var(--gray);
+  border: 1px solid var(--mid);
+  border-radius: 2px;
+  text-align: left;
+  transition: border-color 0.2s;
+}
+
+.contact-card:hover {
+  border-color: var(--accent);
+}
+
+.contact-card-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.contact-card-val {
+  font-size: 0.95rem;
+  color: var(--white);
+}
+
+
+/* ======================
+   12. Footer
+   ====================== */
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 4rem;
+  background: var(--gray);
+  border-top: 1px solid var(--mid);
+}
+
+footer .logo {
+  font-size: 1.4rem;
+}
+
+footer p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+
+/* ======================
+   13. Animations
+   ====================== */
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ======================
+   14. Responsive
+   ====================== */
+
+@media (max-width: 900px) {
+  nav {
+    padding: 1rem 1.5rem;
+  }
+
+  nav ul {
+    gap: 1.25rem;
+  }
+
+  #hero {
+    padding: 8rem 1.5rem 4rem;
+  }
+
+  .hero-stats {
+    position: static;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 2rem;
+  }
+
+  section {
+    padding: 4rem 1.5rem;
+  }
+
+  #about {
+    grid-template-columns: 1fr;
+  }
+
+  .about-visual {
+    height: 280px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #contact {
+    padding: 4rem 1.5rem;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+    padding: 1.5rem;
+  }
+}
